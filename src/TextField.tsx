@@ -1,12 +1,4 @@
-import React, { useState } from "react";
-
-//TextField: => Declare the type of the variable(in this case Function Component)
-//< > angle brackets the props that it takes
-
-/*const TextField: React.FC<{ text: string }> = () => {
-  return <input />;
-};
-export default TextField;*/
+import React, { useRef, useState } from "react";
 
 interface Person {
   firstName: string;
@@ -19,19 +11,24 @@ interface Props {
   i?: number;
   fn?: (bob: string) => string;
   person: Person;
+  // handleChange?: () => void; Hover over "onChange" to know the type in ()
+  handleChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 interface TextNode {
   text: string;
 }
 
-const TextField: React.FC<Props> = () => {
+const TextField: React.FC<Props> = ({ handleChange }) => {
   const [count, setCount] = useState<TextNode>({ text: "Hello" });
-  /* setCount('hello') wouldn't work because typescript infers it's a number instead of a string */
-  /* const [count, setCount] = useState< >(5) => you can tell typescript what the type
-  of the initial state and new value should exactly be */
-  setCount({ text: "bye" });
-  return <input />;
+  const inputRef = useRef<HTMLInputElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
+  return (
+    /* Hover over ref to know what to put by "useRef" */
+    <div ref={divRef}>
+      <input ref={inputRef} onChange={handleChange} />
+    </div>
+  );
 };
 
 export default TextField;
