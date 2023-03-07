@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 //TextField: => Declare the type of the variable(in this case Function Component)
 //< > angle brackets the props that it takes
@@ -21,7 +21,16 @@ interface Props {
   person: Person;
 }
 
+interface TextNode {
+  text: string;
+}
+
 const TextField: React.FC<Props> = () => {
+  const [count, setCount] = useState<TextNode>({ text: "Hello" });
+  /* setCount('hello') wouldn't work because typescript infers it's a number instead of a string */
+  /* const [count, setCount] = useState< >(5) => you can tell typescript what the type
+  of the initial state and new value should exactly be */
+  setCount({ text: "bye" });
   return <input />;
 };
 
